@@ -34,7 +34,7 @@ class Graph:
             currNode = nodes.popleft()
             
             if key == currNode.getValue():
-                return True
+                return currNode
             
             for i in currNode.getNeighbors():
                 if i not in visited:
@@ -42,6 +42,11 @@ class Graph:
                     visited.append(i)
                     
         return False
+    
+    def addNeighborByVal(self,nodeVal,valueToAdd):
+        bfsres = self.bfs(nodeVal)
+        if bfsres != False:
+            bfsres.addNodeWithVal(valueToAdd)
                     
 # main part
 
@@ -54,7 +59,7 @@ class Graph:
            -> 9
       <-> F
 
-"""      
+"""
 head = GraphNode(5)
 child1 = GraphNode(4)
 child2 = GraphNode(2)
@@ -70,4 +75,22 @@ head.addNode(child3)
 child3.addNode(head) # 5 <-> 'F'
 
 g = Graph(head)
-print(g.bfs('15'))
+try:
+    print(g.bfs('w').getValue())
+except AttributeError:
+    print('Not Found')
+    
+g.addNeighborByVal('A','w')
+
+# graph after adding 'w' node to 'A' node
+"""
+    5 -> 4 -> 3
+           -> A -> w
+           -> B
+      -> 2 -> 8
+           -> 9
+      <-> F
+
+"""
+
+print(g.bfs('w').getValue())
